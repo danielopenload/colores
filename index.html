@@ -1,0 +1,166 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Juego Memoria de Colores</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; 
+        align-items: center;
+        height: 100vh;
+        width: 100vw;
+        background-color: #ffffff;
+        font-family: Arial, sans-serif;
+        overflow: hidden;
+    }
+    #textoColor {
+        margin-top: 20px;
+        font-size: 3em;
+        text-transform: uppercase;
+        font-weight: bold;
+        color: #000000;
+        text-align: center;
+        height: 80px;
+    }
+    #mensaje {
+        font-size: 2em;
+        margin: 10px;
+        color: #000000;
+    }
+    #cuadros {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 10px;
+        width: 90%;
+        max-width: 400px;
+        margin-bottom: 30px;
+    }
+    .cuadro {
+        width: 100%;
+        padding-bottom: 100%; /* Cuadrado perfecto */
+        border-radius: 10px;
+        cursor: pointer;
+        border: 2px solid black;
+        transition: transform 0.1s, box-shadow 0.2s;
+    }
+    .cuadro:active {
+        transform: scale(0.95);
+        box-shadow: 0 0 10px #555;
+    }
+    #boton {
+        margin-bottom: 20px;
+        padding: 10px 20px;
+        font-size: 1.5em;
+        cursor: pointer;
+        border: none;
+        border-radius: 10px;
+        background-color: #000000;
+        color: white;
+    }
+</style>
+</head>
+<body>
+
+<div id="textoColor">Pulsa "Jugar"</div>
+<div id="mensaje"></div>
+
+<div id="cuadros">
+    <div class="cuadro" style="background-color: #FF0000;" data-color="ROJO"></div>
+    <div class="cuadro" style="background-color: #0000FF;" data-color="AZUL"></div>
+    <div class="cuadro" style="background-color: #00AA00;" data-color="VERDE"></div>
+    <div class="cuadro" style="background-color: #4B0082;" data-color="VIOLETA"></div>
+    <div class="cuadro" style="background-color: #FFFF00;" data-color="AMARILLO"></div>
+    <div class="cuadro" style="background-color: #FE5000;" data-color="NARANJA"></div>
+    <div class="cuadro" style="background-color: #00AAE4;" data-color="CELESTE"></div>
+    <div class="cuadro" style="background-color: #000000;" data-color="NEGRO"></div>
+    <div class="cuadro" style="background-color: #FF1493;" data-color="ROSA"></div>
+	<div class="cuadro" style="background-color: #2E2019;" data-color="MARRON"></div>
+    <div class="cuadro" style="background-color: #FFFFFF;" data-color="BLANCO"></div>
+    <div class="cuadro" style="background-color: #808080;" data-color="GRIS"></div>
+    
+</div>
+
+<button id="boton">JUGAR</button>
+
+<script>
+const colores = ["ROJO","AZUL","VERDE","NARANJA","VIOLETA","AMARILLO","CELESTE","ROSA","NEGRO","MARRON","BLANCO","GRIS"];
+let secuencia = [];
+let indiceJugador = 0;
+let jugando = false;
+
+const textoColor = document.getElementById('textoColor');
+const mensaje = document.getElementById('mensaje');
+const cuadros = document.querySelectorAll('.cuadro');
+const boton = document.getElementById('boton');
+
+function generarSecuencia() {
+    secuencia = [];
+    const largo = Math.floor(Math.random() * 2) + 3; // mínimo 3, máximo 4 colores
+
+    // Crear una copia de los colores para sacar sin repetir
+    let disponibles = [...colores];
+
+    for(let i = 0; i < largo; i++){
+        const indice = Math.floor(Math.random() * disponibles.length);
+        secuencia.push(disponibles[indice]);
+        // quitar el color elegido para que no se repita
+        disponibles.splice(indice, 1);
+    }
+}
+
+function mostrarSecuencia() {
+    textoColor.textContent = '';
+    mensaje.textContent = 'Observa la secuencia';
+    let i = 0;
+
+    function mostrarSiguiente() {
+        if(i >= secuencia.length){
+            textoColor.textContent = 'Repite la secuencia';
+            jugando = true;
+            return;
+        }
+        textoColor.textContent = secuencia[i];
+        i++;
+        setTimeout(mostrarSiguiente, 650); // cada color se muestra 0.8s
+    }
+
+    mostrarSiguiente();
+}
+
+boton.addEventListener('click', () => {
+    generarSecuencia();
+    mostrarSecuencia();
+    indiceJugador = 0;
+    mensaje.textContent = '';
+});
+
+cuadros.forEach(cuadro => {
+    cuadro.addEventListener('click', () => {
+        if(!jugando) return;
+        const colorSeleccionado = cuadro.dataset.color;
+        if(colorSeleccionado === secuencia[indiceJugador]){
+            indiceJugador++;
+            if(indiceJugador === secuencia.length){
+                mensaje.textContent = '✅ ¡CORRECTO!';
+                jugando = false;
+                textoColor.textContent = '';
+            }
+        } else {
+            mensaje.textContent = '❌ INCORRECTO';
+            jugando = false;
+            textoColor.textContent = '';
+        }
+    });
+});
+</script>
+
+</body>
+</html>
+
+
