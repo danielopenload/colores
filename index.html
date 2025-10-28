@@ -38,7 +38,7 @@
         grid-template-columns: repeat(3, 1fr);
         grid-gap: 10px;
         width: 90%;
-        max-width: 400px;
+        max-width: 350px;
         margin-bottom: 30px;
     }
     .cuadro {
@@ -47,6 +47,7 @@
         border-radius: 10px;
         cursor: pointer;
         border: 2px solid black;
+        box-shadow: 5px 5px 4px 0px rgba(0,0,0,0.85);
         transition: transform 0.1s, box-shadow 0.2s;
     }
     .cuadro:active {
@@ -60,7 +61,7 @@
         cursor: pointer;
         border: none;
         border-radius: 10px;
-        background-color: #000000;
+        background-color: #000000;  
         color: white;
     }
 </style>
@@ -76,13 +77,13 @@
     <div class="cuadro" style="background-color: #00AA00;" data-color="VERDE"></div>
     <div class="cuadro" style="background-color: #4B0082;" data-color="VIOLETA"></div>
     <div class="cuadro" style="background-color: #FFFF00;" data-color="AMARILLO"></div>
-    <div class="cuadro" style="background-color: #FE5000;" data-color="NARANJA"></div>
+    <div class="cuadro" style="background-color: #FF4D00;" data-color="NARANJA"></div>
     <div class="cuadro" style="background-color: #00AAE4;" data-color="CELESTE"></div>
     <div class="cuadro" style="background-color: #000000;" data-color="NEGRO"></div>
     <div class="cuadro" style="background-color: #FF1493;" data-color="ROSA"></div>
-	<div class="cuadro" style="background-color: #2E2019;" data-color="MARRON"></div>
-    <div class="cuadro" style="background-color: #FFFFFF;" data-color="BLANCO"></div>
-    <div class="cuadro" style="background-color: #808080;" data-color="GRIS"></div>
+   <div class="cuadro" style="background-color: #2E2019;" data-color="MARRON"></div>
+   <div class="cuadro" style="background-color: #FFFFFF;" data-color="BLANCO"></div>
+   <div class="cuadro" style="background-color: #808080;" data-color="GRIS"></div>
     
 </div>
 
@@ -147,12 +148,12 @@ cuadros.forEach(cuadro => {
         if(colorSeleccionado === secuencia[indiceJugador]){
             indiceJugador++;
             if(indiceJugador === secuencia.length){
-                mensaje.textContent = '✅ ¡CORRECTO!';
+                mensaje.textContent = '✅ ¡Correcto!';
                 jugando = false;
                 textoColor.textContent = '';
             }
         } else {
-            mensaje.textContent = '❌ INCORRECTO';
+            mensaje.textContent = '❌ Incorrecto';
             jugando = false;
             textoColor.textContent = '';
         }
@@ -162,5 +163,3 @@ cuadros.forEach(cuadro => {
 
 </body>
 </html>
-
-
